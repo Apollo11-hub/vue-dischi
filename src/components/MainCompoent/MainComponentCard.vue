@@ -30,7 +30,7 @@ export default {
     .img-container{
       width: 190px;
       height: 200px;
-      background-color: white;
+
     }
     .titolo{
       font-weight: 600;
