@@ -3,11 +3,16 @@
     <div class="container-fluid py-4">
       <div class="row d-flex justify-content-between align-items-center">
         <img class="filter-green col-1 d-flex justify-content-between align-items-center" src="../assets/img/spotify.svg" alt="Spotify-logo">
-        <select class="col-8 col-lg-3 col-xl-2 mx-3">
-          <option selected>Open this select menu</option>
-          <option value="1">One</option>
-          <option value="2">Two</option>
-          <option value="3">Three</option>
+        <select  
+          v-model="musicGenreSelected" 
+          @change="$emit('choice' , musicGenreSelected )" 
+          class="col-8 col-lg-3 col-xl-2 mx-3">
+          
+          <option value="start">Tutti i Generi</option>
+          <option value="Rock">Rock</option>
+          <option value="Pop">Pop</option>
+          <option value="Jazz">Jazz</option>
+          <option value="Metal">Metal</option>
         </select>
       </div>
     </div>
@@ -16,7 +21,18 @@
 
 <script>
 export default {
-  name: "HeaderLayout"
+  name: "HeaderLayout",
+  mounted() {
+
+  },
+  data() {
+    return {
+      musicGenreSelected: 'start'
+    }
+  },
+  methods: {
+
+  },
 }
 </script>
 

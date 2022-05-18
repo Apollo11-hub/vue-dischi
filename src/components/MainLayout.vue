@@ -3,7 +3,7 @@
     <div class="container pt-5 d-flex"  v-if="isLoaded">
       <div class="row row-cols-6 w-100 h-75 d-flex justify-content-center  ">
         <main-component-card
-        v-for="music in musicArray" :key="`main-${music}`"
+        v-for="(music , index) in filterdMusicArray" :key="`main-${index}`"
         :musicItem="music"
         ></main-component-card>
       </div>
@@ -20,30 +20,35 @@
 </template>
 
 <script>
-import axios from 'axios';
 import MainComponentCard from './MainCompoent/MainComponentCard.vue';
+
 export default {
   components: { MainComponentCard },
   name:'MainLayout',
-  mounted() {
-    this.getApi()
+  props:{
+    isLoaded : Boolean,
+    musicArray : Array,
+    musicUserChoice : String
   },
-  data() {
-    return {
-      baseUrl: 'https://flynn.boolean.careers/exercises/api/array/music',
-      musicArray:[],
-      isLoaded:false,
+mounted() {
+  console.log(this.musicArray.genre)
+},
+
+
+
+  computed: {
+    filterdMusicArray(){
+      let filtredGenre = [];
+      if(this.musicUserChoice === 'start'){
+        filtredGenre = this.musicArray;
+      }else{
+        filtredGenre = this.musicArray.filter(music =>{
+          return music.genre === this.musicUserChoice;
+        })
+      }
+      return filtredGenre;
     }
-  },
-  methods: {
-    getApi(){
-      axios.get(this.baseUrl)
-      .then(res =>{
-        this.musicArray = res.data.response;
-        console.log(this.musicArray);
-        this.isLoaded = true;
-      })
-    }
+
   },
 
 }
