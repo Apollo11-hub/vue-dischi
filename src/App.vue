@@ -1,7 +1,8 @@
 <template>
   <div>
     <HeaderLayout
-    :musicArray="musicArray"
+    :filteredArrayGenres="filteredArrayGenres"
+    :filteredArrayArtists="filteredArrayArtists"
     @choiceGenre="musicTypeSelected"
     @choiceArtist="musicArtistSelected"
     />
@@ -34,6 +35,8 @@ export default {
     return {
       baseUrl: 'https://flynn.boolean.careers/exercises/api/array/music',
       musicArray:[],
+      filteredArrayGenres:[],
+      filteredArrayArtists:[],
       isLoaded:false,
       genreUserChoice: '',
       artistUserChoice:''
@@ -46,9 +49,29 @@ export default {
       .then(res =>{
         this.musicArray = res.data.response;
         console.log(this.musicArray);
+        this.arrayFilteredGenreFunction();
+        this.arrayFilteredArtistFunction();
         this.isLoaded = true;
       })
+      .catch(err=>{
+        console.log(err)
+      })
     },
+
+
+    arrayFilteredGenreFunction(){
+      this.musicArray.forEach(artist => {
+        if(!this.filteredArrayArtists.includes(artist.author)) this.filteredArrayArtists.push(artist.author)
+      });
+    },
+
+    arrayFilteredArtistFunction(){
+      this.musicArray.forEach(genre => {
+        if(!this.filteredArrayGenres.includes(genre.genre)) this.filteredArrayGenres.push(genre.genre)
+      });
+    },
+
+      
     musicTypeSelected(genreSelected){
       console.log('--->', genreSelected)
       this.genreUserChoice = genreSelected
