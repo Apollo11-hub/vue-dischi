@@ -25,7 +25,7 @@ export default {
 @import '../../assets/style/general';
 @import '../../assets/style/utilities';
   .col{
-    margin: 30px 35px 30px 0;
+    margin: 25px 35px 25px 0;
     background-color: #2e3a46;
     .img-container{
       width: 190px;

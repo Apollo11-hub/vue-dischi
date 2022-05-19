@@ -3,7 +3,7 @@
     <div class="container pt-5 d-flex"  v-if="isLoaded">
       <div class="row row-cols-6 w-100 h-75 d-flex justify-content-center  ">
         <main-component-card
-        v-for="(music , index) in filterdMusicArray" :key="`main-${index}`"
+        v-for="(music , index) in filteredArrayFunction" :key="`main-${index}`"
         :musicItem="music"
         ></main-component-card>
       </div>
@@ -28,26 +28,58 @@ export default {
   props:{
     isLoaded : Boolean,
     musicArray : Array,
-    musicUserChoice : String
+    genreUserChoice : String,
+    artistUserChoice : String
   },
-mounted() {
-  console.log(this.musicArray.genre)
-},
 
 
 
   computed: {
-    filterdMusicArray(){
-      let filtredGenre = [];
-      if(this.musicUserChoice === 'start'){
-        filtredGenre = this.musicArray;
-      }else{
-        filtredGenre = this.musicArray.filter(music =>{
-          return music.genre === this.musicUserChoice;
-        })
-      }
-      return filtredGenre;
+    // filterdMusicArrayPerGenre(){
+    //   let filtredGenre = [];
+    //   if(this.genreUserChoice === ''){
+    //     filtredGenre = this.musicArray;
+    //   }else{
+    //     filtredGenre = this.musicArray.filter(music =>{
+    //       return music.genre === this.genreUserChoice;
+    //     })
+    //   }
+    //   return filtredGenre;
+    // },
+
+    // filteredMusicArrayPerArtist(){
+    //   let filteredArtist = [];
+    //   if(this.artistUserChoice === ''){
+    //     filteredArtist = this.musicArray;
+    //   }else{
+    //     filteredArtist = this.musicArray.filter(music =>{
+    //       return music.author === this.artistUserChoice;
+    //     })
+    //   }
+    //   return filteredArtist;
+    // },
+
+
+  filteredArrayFunction(){
+    let filterArray = [];
+    if(this.artistUserChoice === '' && this.genreUserChoice === ''){
+      filterArray = this.musicArray;
+    }else if ( this.artistUserChoice != '' && this.genreUserChoice === ''){
+      filterArray = this.musicArray.filter(artist =>{
+        return artist.author === this.artistUserChoice;
+      })
+    }else if ( this.artistUserChoice === '' && this.genreUserChoice != ''){
+      filterArray = this.musicArray.filter(artist =>{
+        return artist.genre === this.genreUserChoice;
+      })
+    }else{
+      filterArray= this.musicArray.filter(array =>{
+        return (array.genre.includes(this.genreUserChoice) && array.author.includes(this.artistUserChoice))
+      } )
     }
+    return filterArray
+  }
+
 
   },
 
@@ -59,7 +91,7 @@ mounted() {
 @import '../assets/style/utilities';
   section{
     background-color:#1e2d3b ;
-    height: calc(100vh - 84px);
+    min-height: calc(100vh - 84px);
     .container{
       height: 100%;
     }

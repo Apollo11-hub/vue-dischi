@@ -5,15 +5,23 @@
         <img class="filter-green col-1 d-flex justify-content-between align-items-center" src="../assets/img/spotify.svg" alt="Spotify-logo">
         <select  
           v-model="musicGenreSelected" 
-          @change="$emit('choice' , musicGenreSelected )" 
+          @change="$emit('choiceGenre' , musicGenreSelected )" 
           class="col-8 col-lg-3 col-xl-2 mx-3">
-          
-          <option value="start">Tutti i Generi</option>
+          <option value="">Tutti i Generi</option>
           <option value="Rock">Rock</option>
           <option value="Pop">Pop</option>
           <option value="Jazz">Jazz</option>
           <option value="Metal">Metal</option>
         </select>
+          <select
+            v-model="musicArtistSelected"
+            @change="$emit('choiceArtist', musicArtistSelected)"
+            class="col-8 col-lg-3 col-xl-2 mx-3">
+            <option value="">Tutti Gli Artisti</option>
+            <option
+              v-for="(artist, index) in musicArray" :key="`artist${index}`"
+              :value="artist.author">{{artist.author}}</option>
+          </select>
       </div>
     </div>
   </section>
@@ -22,12 +30,14 @@
 <script>
 export default {
   name: "HeaderLayout",
-  mounted() {
-
+  props:{
+    musicArray : Array,
   },
+
   data() {
     return {
-      musicGenreSelected: 'start'
+      musicGenreSelected: '',
+      musicArtistSelected: '',
     }
   },
   methods: {

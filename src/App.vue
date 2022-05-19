@@ -1,12 +1,15 @@
 <template>
   <div>
     <HeaderLayout
-    @choice="musicTypeSelected"
+    :musicArray="musicArray"
+    @choiceGenre="musicTypeSelected"
+    @choiceArtist="musicArtistSelected"
     />
     <MainLayout
       :musicArray="musicArray"
       :isLoaded="isLoaded"
-      :musicUserChoice="musicUserChoice"
+      :genreUserChoice="genreUserChoice"
+      :artistUserChoice="artistUserChoice"
     />
 
   </div>
@@ -32,7 +35,8 @@ export default {
       baseUrl: 'https://flynn.boolean.careers/exercises/api/array/music',
       musicArray:[],
       isLoaded:false,
-      musicUserChoice: ''
+      genreUserChoice: '',
+      artistUserChoice:''
       
     }
   },
@@ -41,13 +45,19 @@ export default {
       axios.get(this.baseUrl)
       .then(res =>{
         this.musicArray = res.data.response;
+        console.log(this.musicArray);
         this.isLoaded = true;
       })
     },
-    musicTypeSelected(optionSelected){
-      console.log('--->', optionSelected)
-      this.musicUserChoice = optionSelected
+    musicTypeSelected(genreSelected){
+      console.log('--->', genreSelected)
+      this.genreUserChoice = genreSelected
+    },
+    musicArtistSelected(artistSelected){
+      console.log('--->', artistSelected);
+      this.artistUserChoice = artistSelected
     }
+
 
   },
   
